@@ -1,23 +1,27 @@
 // lib/core/routes.dart
 import 'package:flutter/material.dart';
-import 'package:tbe/features/on_boarding/presentation%20_layer/screens/on_boarding_screen.dart';
-import 'package:tbe/splash_screen.dart';
-
+import 'package:tbe/HomeScreen.dart';
 
 class Routes {
-  static const String splash = '/';
-  static const String onboarding = '/onboarding';
+  static const String home = '/';
+  static const String productDetail = '/product-detail';
+  static const String cart = '/cart';
 
-  static Route<dynamic> generateRoute(RouteSettings settings) {
+  static Route<dynamic> generate(RouteSettings settings) {
     switch (settings.name) {
-      case splash:
-        return MaterialPageRoute(builder: (_) => SplashScreen());
-      case onboarding:
-        return MaterialPageRoute(builder: (_) => OnboardingScreen());
+      case home:
+        return MaterialPageRoute(builder: (_) => HomeScreen());
+      // case productDetail:
+      //   final productId = settings.arguments as int;
+      //   return MaterialPageRoute(
+      //     builder: (_) => ProductDetailScreen(productId: productId),
+      //   );
+      // case cart:
+      //   return MaterialPageRoute(builder: (_) => CartScreen());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(
-            body: Center(child: Text("No route defined for ${settings.name}")),
+            body: Center(child: Text('No route defined for ${settings.name}')),
           ),
         );
     }

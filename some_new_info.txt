@@ -1,0 +1,67 @@
+1-when to use cubit or statemanagement
+a-if you need to fetch data from api
+b-control navigation based on logic(splash screen to go to boarding or home)
+c-handle user interaction and update ui(Like pressing "Next" in onboarding to move PageView)
+d-You need to store/save/retrieve data (settings, auth tokens)	Save if the user has finished onboarding
+e-You have a UI that changes based on events	Loading -> Success -> Error screens
+       when to not use it
+       A simple welcome screen	Static title, image, description
+       A button that just navigates without condition	"Start" button without checking anything
+       A decorative screen	App Logo Screen
+       A static form	Like Contact Us page without logic
+
+
+
+2-shr7 ll bloc fl screens
+a-bloc builder:bst3mlha lw ana h8ir fl ui b7ot el ui el 3aiz yt8ir gwa el builder wi el msh 3aizo yt8ir bara
+b-bloc listener da lw msh 3aiz a8ir fl ui el 8ir bta3i hybaa masln eny an2l ll screen di a di aw masln hytl3 snackbar aw dialouge fa bst3mlha wi bardo lw feh ui msh hyt8ir b7oto bara
+c-bloc consumer mix ben el 2 el fo2 bst3ml el listener b3den builder
+//el ui el msh hyt8ir bib2a gwa el bloc listener aw bloc consumer aw bloc builder bas mshgwa listener aw builder aw consumer zt nafshom
+
+ex:BlocListener<YourCubit, YourState>(
+  listener: (context, state) {
+    if (state is SuccessState) {
+      Navigator.pushNamed(context, '/home');
+    } else if (state is ErrorState) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('An error occurred')));
+    }
+  },
+  child: YourWidget(),
+);// di aflt el bracketel fo2
+
+
+
+
+ex:on consumer
+BlocConsumer<YourCubit, YourState>(
+  listener: (context, state) {
+    if (state is SuccessState) {
+      Navigator.pushNamed(context, '/home');
+    } else if (state is ErrorState) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('An error occurred')));
+    }
+  },
+  builder: (context, state) {
+    if (state is LoadingState) {
+      return CircularProgressIndicator();
+    } else if (state is LoadedState) {
+      return Text('Data Loaded');
+    } else {
+      return Text('Error');
+    }
+  },
+);
+
+3-cubit states
+//states mo3zm el 2t btb2a inital ,sucess,fail,loading aw lw rai7 screen baa bktbhaa tohome aw toonboarding
+//el loaded wl error bas bktb fehom hgat 
+class ProductLoadedState extends ProductState {
+  final List<Product> products;
+  ProductLoadedState(this.products);
+}
+
+class ProductErrorState extends ProductState {
+  final String errorMessage;
+  ProductErrorState(this.errorMessage);
+}
+
